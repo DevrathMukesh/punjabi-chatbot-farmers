@@ -1,0 +1,4 @@
+.env
+indictrans2-en-indic-1B-saved
+indictrans2-indic-en-1B-saved
+huggingface_embeddings.pkl
