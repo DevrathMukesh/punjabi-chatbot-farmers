@@ -10,7 +10,37 @@ const Chatbot = () => {
   const [recorder, setRecorder] = useState(null); // Track the recorder instance
   const [recognizedText, setRecognizedText] = useState("");
   const [language, setLanguage] = useState("en-IN"); // Language toggle state
+  const [file, setFile] = useState(null); // Track the selected file for upload
   const chatContainerRef = useRef(null);
+
+
+  const handleAddDocuments = async () => {
+    if (!file) {
+      alert("Please select a document to upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("document", file);
+
+    try {
+      const response = await axios.post('http://localhost:5000/upload', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(response.data.message); // Success message
+    } catch (error) {
+      console.error('Error uploading document:', error.message || error);
+    }
+  };
+
+  // Handle file input change
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
 
   // Auto-scroll to the latest message
   useEffect(() => {
@@ -132,16 +162,14 @@ const Chatbot = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`flex ${
-              msg.type === "user" ? "justify-end" : "justify-start"
-            } mb-2`}
+            className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"
+              } mb-2`}
           >
             <div
-              className={`p-3 rounded-lg max-w-[75%] ${
-                msg.type === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-black"
-              }`}
+              className={`p-3 rounded-lg max-w-[75%] ${msg.type === "user"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-black"
+                }`}
             >
               {msg.text}
             </div>
@@ -170,24 +198,38 @@ const Chatbot = () => {
           />
           <button
             onClick={handleRecord}
-            className={`p-3 rounded-md ${
-              isRecording ? "bg-red-500" : "bg-green-500"
-            } text-white hover:opacity-80 transition`}
+            className={`p-3 rounded-md ${isRecording ? "bg-red-500" : "bg-green-500"
+              } text-white hover:opacity-80 transition`}
           >
             {isRecording ? "Stop 🎙️" : "Record 🎤"}
           </button>
           <button
             onClick={handleSend}
             disabled={!input || loading}
-            className={`p-3 rounded-md ${
-              loading ? "bg-gray-500" : "bg-blue-600"
-            } text-white hover:bg-blue-700 transition`}
+            className={`p-3 rounded-md ${loading ? "bg-gray-500" : "bg-blue-600"
+              } text-white hover:bg-blue-700 transition`}
           >
             {loading ? (
               <div className="w-5 h-5 border-4 border-t-4 border-white rounded-full animate-spin"></div>
             ) : (
               "Send 🚀"
             )}
+          </button>
+        </div>
+        {/* File Upload Section */}
+        <div className="flex items-center mt-3 space-x-3">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept=".txt,.pdf,.docx"
+            className="p-2 rounded-md bg-gray-700 text-white"
+          />
+          <button
+            onClick={handleAddDocuments}
+            disabled={!file}
+            className={`p-3 rounded-md ${!file ? "bg-gray-500" : "bg-yellow-600"} text-white hover:bg-yellow-700 transition`}
+          >
+            Upload Document 📄
           </button>
         </div>
       </div>
