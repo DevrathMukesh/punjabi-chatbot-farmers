@@ -1,0 +1,36 @@
+/* PunjabiKeyboard.css */
+.punjabi-keyboard {
+    display: flex;
+    flex-direction: column; /* Arrange rows vertically */
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .keyboard-row {
+    display: flex;
+    flex-wrap: wrap; /* Allow keys to wrap to the next line */
+    justify-content: center; /* Center keys horizontally */
+    margin-bottom: 5px; /* Spacing between rows */
+  }
+  
+  .keyboard-row button {
+    padding: 10px 15px;
+    margin: 3px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .keyboard-row button:hover {
+    background-color: #45a049;
+  }
+  
+  .keyboard-row button:active {
+    background-color: #3e8e41;
+  }

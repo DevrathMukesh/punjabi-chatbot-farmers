@@ -1,0 +1,34 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #1a202c; /* Dark gray background for consistency */
+  color: #e2e8f0; /* Soft white text */
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar Specific */
+nav {
+  border-right: 2px solid #2d3748; /* Slightly darker border for better separation */
+}
+
+/* Keyframes for potential animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
